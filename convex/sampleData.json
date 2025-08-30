@@ -1,0 +1,101 @@
+[
+  {
+    "name": "A.R. Rahman | Jai Ho World Tour",
+    "description": "Experience the Oscar-winning composer's magical musical journey live!",
+    "price": 499.99,
+    "totalTickets": 100,
+    "location": "Jawaharlal Nehru Stadium, New Delhi",
+    "eventDate": 1723845600000,
+    "userId": "user_2bFMHkGxZPWVyJ5QEJQxfsCkxB"
+  },
+  {
+    "name": "Arijit Singh | Tum Hi Ho Concert",
+    "description": "Feel the emotion with Bollywood's most soulful voice in a night of romantic ballads!",
+    "price": 399.99,
+    "totalTickets": 150,
+    "location": "DY Patil Stadium, Mumbai",
+    "eventDate": 1717891200000,
+    "userId": "user_2bFMHkGxZPWVyJ5QEJQxfsCkxB"
+  },
+  {
+    "name": "Shah Rukh Khan | Pathaan World Tour",
+    "description": "Join Bollywood's King Khan for an unforgettable night of entertainment and dance!",
+    "price": 599.99,
+    "totalTickets": 120,
+    "location": "Wankhede Stadium, Mumbai",
+    "eventDate": 1725055200000,
+    "userId": "user_3cGNIlHyAQXWzK6RFKygdtDlyC"
+  },
+  {
+    "name": "Zakir Hussain | Masters of Percussion",
+    "description": "Experience the tabla maestro's rhythmic brilliance in a classical fusion concert!",
+    "price": 299.99,
+    "totalTickets": 80,
+    "location": "Music Academy, Chennai",
+    "eventDate": 1716682000000,
+    "userId": "user_4dHOJmIzBRYXzL7SFLzheuEmzD"
+  },
+  {
+    "name": "Sunburn Festival Goa 2024",
+    "description": "India's premier electronic dance music festival featuring top Indian DJs!",
+    "price": 349.99,
+    "totalTickets": 500,
+    "location": "Vagator Beach, Goa",
+    "eventDate": 1718064000000,
+    "userId": "user_3cGNIlHyAQXWzK6RFKygdtDlyC"
+  },
+  {
+    "name": "Priyanka Chopra | Desi Girl Tour",
+    "description": "Global icon returns to her roots with music, dance and celebrity appearances!",
+    "price": 449.99,
+    "totalTickets": 100,
+    "location": "Indira Gandhi Arena, Delhi",
+    "eventDate": 1719273600000,
+    "userId": "user_5eIPJnJzCRYYzM8TGMzifdFnzE"
+  },
+  {
+    "name": "Shreya Ghoshal | Melodious Evening",
+    "description": "Immerse yourself in the divine voice of India's nightingale!",
+    "price": 379.99,
+    "totalTickets": 120,
+    "location": "Bangalore International Exhibition Centre",
+    "eventDate": 1720483200000,
+    "userId": "user_4dHOJmIzBRYXzL7SFLzheuEmzD"
+  },
+  {
+    "name": "Alia Bhatt | Gangubai Live Show",
+    "description": "Witness Bollywood's versatile actress in a spectacular theatrical performance!",
+    "price": 429.99,
+    "totalTickets": 90,
+    "location": "Nita Mukesh Ambani Cultural Centre, Mumbai",
+    "eventDate": 1721692800000,
+    "userId": "user_5eIPJnJzCRYYzM8TGMzifdFnzE"
+  },
+  {
+    "name": "Sonu Nigam | Deewana Tour",
+    "description": "Experience the versatile vocal range of one of India's most beloved playback singers!",
+    "price": 359.99,
+    "totalTickets": 130,
+    "location": "Indira Gandhi Stadium, Hyderabad",
+    "eventDate": 1722902400000,
+    "userId": "user_3cGNIlHyAQXWzK6RFKygdtDlyC"
+  },
+  {
+    "name": "Ranveer Singh | Gully Boy Live",
+    "description": "Join Bollywood's most energetic star for a night of hip-hop and entertainment!",
+    "price": 479.99,
+    "totalTickets": 110,
+    "location": "NSCI Dome, Mumbai",
+    "eventDate": 1724112000000,
+    "userId": "user_2bFMHkGxZPWVyJ5QEJQxfsCkxB"
+  },
+  {
+    "name": "Ustad Amjad Ali Khan | Sarod Recital",
+    "description": "A rare opportunity to witness the legendary sarod maestro perform classical ragas!",
+    "price": 329.99,
+    "totalTickets": 70,
+    "location": "Chowdiah Memorial Hall, Bangalore",
+    "eventDate": 1725321600000,
+    "userId": "user_4dHOJmIzBRYXzL7SFLzheuEmzD"
+  }
+]
