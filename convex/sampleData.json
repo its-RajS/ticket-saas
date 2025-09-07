@@ -5,7 +5,7 @@
     "price": 499.99,
     "totalTickets": 100,
     "location": "Jawaharlal Nehru Stadium, New Delhi",
-    "eventDate": 1723845600000,
+    "eventDate": 1718323200000,
     "userId": "user_2bFMHkGxZPWVyJ5QEJQxfsCkxB"
   },
   {
@@ -14,7 +14,7 @@
     "price": 399.99,
     "totalTickets": 150,
     "location": "DY Patil Stadium, Mumbai",
-    "eventDate": 1717891200000,
+    "eventDate": 1687891200000,
     "userId": "user_2bFMHkGxZPWVyJ5QEJQxfsCkxB"
   },
   {
@@ -32,7 +32,7 @@
     "price": 299.99,
     "totalTickets": 80,
     "location": "Music Academy, Chennai",
-    "eventDate": 1716682000000,
+    "eventDate": 1686682000000,
     "userId": "user_4dHOJmIzBRYXzL7SFLzheuEmzD"
   },
   {
@@ -77,7 +77,7 @@
     "price": 359.99,
     "totalTickets": 130,
     "location": "Indira Gandhi Stadium, Hyderabad",
-    "eventDate": 1722902400000,
+    "eventDate": 1685902400000,
     "userId": "user_3cGNIlHyAQXWzK6RFKygdtDlyC"
   },
   {
@@ -95,7 +95,7 @@
     "price": 329.99,
     "totalTickets": 70,
     "location": "Chowdiah Memorial Hall, Bangalore",
-    "eventDate": 1725321600000,
+    "eventDate": 1684112000000,
     "userId": "user_4dHOJmIzBRYXzL7SFLzheuEmzD"
   }
 ]

@@ -1,25 +1,40 @@
+"use client";
+
 import { Search } from "lucide-react";
-import Form from "next/form";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "./ui/button";
 
-const SearchBar = () => { 
+const SearchBar = () => {
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(`/search?query=${encodeURIComponent(query.trim())}`);
+    }
+  };
+
   return (
     <div>
-      <Form action={"/search"} className="relative">
+      <form onSubmit={handleSubmit} className="relative">
         <input
           type="text"
           name="query"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           placeholder="Search for events..."
-          className="w-full bg-white rounded-xl border border-gray-200 shadow-sm py-3 px-4 pl-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 "
+          className="w-full bg-white rounded-xl border border-gray-200 shadow-sm py-3 px-4 pl-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
         />
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 " />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
         <Button
           type="submit"
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200 "
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200"
         >
           Search
         </Button>
-      </Form>
+      </form>
     </div>
   );
 };
