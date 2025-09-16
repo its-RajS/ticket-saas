@@ -20,13 +20,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Button } from "./ui/button";
 import PurchaseTicket from "./PurchaseTicket";
-
-function useStorageUrl(storageId: Id<"_storage"> | "undefined") {
-  return useQuery(
-    api.storage.getUrl,
-    storageId !== "undefined" ? { storageId } : "skip"
-  );
-}
+import { useStorageUrl } from "./StoreImage";
 
 const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
   const { user } = useUser();
@@ -54,11 +48,6 @@ const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
 
   //? ImageUrl
   const imageUrl = useStorageUrl(event?.eventImgId ?? "undefined");
-
-  // Debug image URL
-  useEffect(() => {
-    console.log(`EventCard ${eventId} - Image URL:`, imageUrl);
-  }, [eventId, imageUrl]);
 
   // FIX: Added more detailed loading states
   if (event === undefined || availability === undefined) {
@@ -276,13 +265,13 @@ const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
               {availability.totalTickets - availability.purchasedTickets} /{" "}
               {availability.totalTickets} available
               {/* //? Tickets offered */}
-              {/* {!isPastEvent && availability.validOfferedTickets > 0 && (
+              {!isPastEvent && availability.validOfferedTickets > 0 && (
                 <span className="text-amber-600 text-sm ml-2">
                   ({availability.validOfferedTickets}{" "}
                   {availability.validOfferedTickets === 1 ? "person" : "people"}{" "}
                   trying to buy)
                 </span>
-              )} */}
+              )}
             </span>
           </div>
         </div>

@@ -44,10 +44,8 @@ export const getEventAvailable = query({
   },
   handler: async (ctx, args) => {
     try {
-      console.log(`Checking availability for event: ${args.eventId}`);
       const event = await ctx.db.get(args.eventId);
       if (!event) {
-        console.error("Event not found for availability check");
         throw new ConvexError("Event not found");
       }
 
@@ -90,11 +88,8 @@ export const getEventAvailable = query({
         validOfferedTickets,
         remainingTickets: Math.max(0, event.totalTickets - totalReserved),
       };
-
-      console.log("Availability result:", result);
       return result;
     } catch (error) {
-      console.error("Error checking event availability:", error);
       throw new ConvexError("Failed to check event availability");
     }
   },
