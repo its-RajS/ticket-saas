@@ -1,5 +1,5 @@
 import { ConvexError, v } from "convex/values";
-import { query } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { TICKET_STATUS, WAITINGLIST_STATUS } from "./constants";
 
 export const getEvents = query({
@@ -89,6 +89,55 @@ export const getEventAvailable = query({
         remainingTickets: Math.max(0, event.totalTickets - totalReserved),
       };
       return result;
+    } catch (error) {
+      throw new ConvexError("Failed to check event availability");
+    }
+  },
+});
+
+export const calEventAvailable = query({
+  args: {
+    eventId: v.id("events"),
+  },
+  handler: async (ctx, args) => {
+    try {
+      return await ctx.runQuery(getEventAvailable(ctx, args.eventId));
+    } catch (error) {
+      throw new ConvexError("Failed to check event availability");
+    }
+  },
+});
+
+export const joinWaitingList = mutation({
+  args: {
+    eventId: v.id("events"),
+    userId: v.id("users"),
+  },
+  handler: async (ctx, args) => {
+    try {
+      //? Check weather the user is already in the waiting list
+      const existingUser = await ctx.db
+        .query("waitingList")
+        .withIndex("by_user_event", (q) =>
+          q.eq("eventId", args.eventId).eq("userId", args.userId)
+        )
+        .filter((q) => q.neq(q.field("status"), WAITINGLIST_STATUS.EXPIRED))
+        .first();
+
+      //? Dont allow if user is already in the waiting list
+      if (existingUser) {
+        throw new ConvexError("Already in the waiting list for this event");
+      }
+      //? verify the event exists
+      const event = ctx.db.get(args.eventId);
+      if (!event) {
+        throw new ConvexError("Event not found");
+      }
+
+      //? check avaibility
+      const { remainingTickets } = await calEventAvailable(ctx, {
+        eventId: args.eventId,
+      });
     } catch (error) {
       throw new ConvexError("Failed to check event availability");
     }
