@@ -1,5 +1,5 @@
 import { ConvexError, v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { internalMutation, mutation, query } from "./_generated/server";
 import { WAITINGLIST_STATUS } from "./constants";
 
 export const getQueuePosition = query({
@@ -69,5 +69,31 @@ export const releaseTicket = mutation({
     // await processQueue(ctx, {
     //   eventId: args.eventId,
     // });
+  },
+});
+
+//! Internal mutations
+export const expireOffer = internalMutation({
+  args: {
+    waitingListId: v.id("waitingList"),
+    eventId: v.id("events"),
+  },
+  handler: async (ctx, args) => {
+    //? check the user entry
+    const offerEntry = await ctx.db.get(args.waitingListId);
+    if (!offerEntry) {
+      throw new ConvexError("Waiting list entry not found");
+    }
+    if (offerEntry.status !== WAITINGLIST_STATUS.OFFERED) {
+      return;
+    }
+    //? expire the offer
+    await ctx.db.patch(args.waitingListId, {
+      status: WAITINGLIST_STATUS.EXPIRED,
+    });
+
+    await processQueue(ctx, {
+      eventId: args.eventId,
+    });
   },
 });

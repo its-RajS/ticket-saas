@@ -1,6 +1,7 @@
 import { ConvexError, v } from "convex/values";
-import { mutation, query } from "./_generated/server";
-import { TICKET_STATUS, WAITINGLIST_STATUS } from "./constants";
+import { internalQuery, mutation, query } from "./_generated/server";
+import { DURATION, TICKET_STATUS, WAITINGLIST_STATUS } from "./constants";
+import { api, internal } from "./_generated/api";
 
 export const getEvents = query({
   args: {},
@@ -27,9 +28,7 @@ export const getEventById = query({
   },
   handler: async (ctx, args) => {
     try {
-      console.log(`Fetching event with ID: ${args.eventId}`);
       const event = await ctx.db.get(args.eventId);
-      console.log("Event found:", event);
       return event;
     } catch (error) {
       console.error("Error fetching event by ID:", error);
@@ -95,19 +94,6 @@ export const getEventAvailable = query({
   },
 });
 
-export const calEventAvailable = query({
-  args: {
-    eventId: v.id("events"),
-  },
-  handler: async (ctx, args) => {
-    try {
-      return await ctx.runQuery(getEventAvailable(ctx, args.eventId));
-    } catch (error) {
-      throw new ConvexError("Failed to check event availability");
-    }
-  },
-});
-
 export const joinWaitingList = mutation({
   args: {
     eventId: v.id("events"),
@@ -129,15 +115,56 @@ export const joinWaitingList = mutation({
         throw new ConvexError("Already in the waiting list for this event");
       }
       //? verify the event exists
-      const event = ctx.db.get(args.eventId);
+      const event = await ctx.db.get(args.eventId);
       if (!event) {
         throw new ConvexError("Event not found");
       }
 
       //? check avaibility
-      const { remainingTickets } = await calEventAvailable(ctx, {
-        eventId: args.eventId,
-      });
+      const { remainingTickets } = await ctx.runQuery(
+        api.events.getEventAvailable,
+        {
+          eventId: args.eventId,
+        }
+      );
+
+      if (remainingTickets > 0) {
+        //? tickets are available, create an offer entry
+        const waitingListId = await ctx.db.insert("waitingList", {
+          eventId: args.eventId,
+          userId: args.userId,
+          status: WAITINGLIST_STATUS.OFFERED, //* Mark as offered
+          offerExpireAt: Date.now() + DURATION.TICKET_OFFER,
+        });
+
+        //! Schedule a job to expire the offer afterthe expireTime
+        await ctx.scheduler.runAfter(
+          DURATION.TICKET_OFFER,
+          internal.waitingList.expireOffer,
+          {
+            waitingListId,
+            eventId: args.eventId,
+          }
+        );
+        return {
+          success: true,
+          status: WAITINGLIST_STATUS.OFFERED,
+          message: `Ticket offered - ${DURATION.TICKET_OFFER / 60000} min to purchase`,
+          waitingListId,
+        };
+      } else {
+        // NO tickets available add to awaiting list
+        await ctx.db.insert("waitingList", {
+          eventId: args.eventId,
+          userId: args.userId,
+          status: WAITINGLIST_STATUS.WAITING, //* Mark as waiting
+        });
+        return {
+          success: true,
+          status: WAITINGLIST_STATUS.WAITING,
+          message: "Added to waiting list - check queue position",
+        };
+      }
     } catch (error) {
       throw new ConvexError("Failed to check event availability");
     }
